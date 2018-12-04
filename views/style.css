@@ -1,0 +1,25 @@
+body {background-color: lightblue;}
+
+div.sides, div.drinks, div.tacos {
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+div.customers {
+    border: 2px dotted blue;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+div.order {
+    border: 2px dotted blue;
+    padding: 5px;
+    border-radius: 5px;
+    float: left;
+}
+
+input {
+    margin-bottom: 10px;
+}

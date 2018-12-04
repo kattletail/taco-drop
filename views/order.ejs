@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <title>TACO DROP</title>
+</head>
+<body>
+
+  <% var total_taco_price = 0; %>
+  <% var total_side_price = 0; %>
+  <% var total_drink_price = 0; %>    
+  <% var total_price = 0; %>     
+    
+  <% var chicken_taco_count = 0; %>
+  <% var beef_taco_count = 0; %>    
+  <% var tofu_taco_count = 0; %>
+  <% var beans_count = 0; %>
+  <% var chips_count = 0; %>
+  <% var salsa_count = 0; %>
+  <% var guacamole_count = 0; %>
+  <% var brownrice_count = 0; %>     
+  <% var coke_count = 0; %>
+  <% var pepsi_count = 0; %>
+  <% var sprite_count = 0; %>
+  <% var drpepper_count = 0; %>
+  <% var fanta_count = 0; %>
+    
+  <% var currentdate = new Date(); %>
+  <% var day; %>
+  <% var month; %>
+  <% var year; %>
+  <% var hour; %>
+  <% var minute; %> 
+  <% var second; %> 
+    
+  <% var discount_rate = 0.00; %>     
+    <% var user; %>    
+    <% for(var i=0; i<customers.length; i++) { %>
+          <% if (customers[i].current_user == "True") { %>
+            <% user = customers[i]; %>
+            <h1 class="jumbotron text-center">Place your order</h1>
+         <% } %>
+    <% } %> 
+    <% if(user != null) { %>
+    <% for(var i=0; i<discounts.length; i++) { %>
+          <% if (discounts[i].applied == "True") { %>
+            <% discount_rate = parseFloat(discounts[i].discount); %>
+         <% } %>
+    <% } %>     
+    
+<div class="customers">
+    <% for(var i=0; i<customers.length; i++) { %>
+          <% if (customers[i].current_user == "True") { %>
+            <% var user = customers[i]; %>
+         <% } %>
+    <% } %>
+    <div class="border border-primary border-left-0 border-right-0">
+    <b>Your Information:</b>
+      <b>Name:</b>
+      <b><%= user.fname + " " + user.lname%></b><br>
+      <b>Address:</b>
+      <b><%= user.street + " " + user.city + " " + user.state + " " + user.zip %></b><br>
+      <b>Contact Information:</b>
+      <b><%= "Phone number: " + user.phone_number + ", Email: " + user.email %></b><br>
+      <span><a href="/profile" class="btn btn-outline-primary col-md-3 mt-3">Edit Profile</a>
+      <a href="/logout" class="btn btn-outline-dark col-md-3 mt-3">Logout</a></span>
+    </div>    
+</div>    
+    
+<div class="tacos">    
+  <b>Tacos ($2.00):</b>
+  <form action="/tacos" method="POST">
+      <div class="container form-group col-sm-12 px-3 mt-3">
+      <b>Protein: </b>      
+      <select name="protein" class="form-control selcls col-sm-3">
+          <option value="beef">Beef</option>
+          <option value="chicken">Chicken</option>
+          <option value="tofu">Tofu</option>
+      </select>     
+      <b>Cheese: </b>
+      <select name="cheese" class="form-control selcls col-sm-3">
+          <option value="none">None</option>
+          <option value="regular" selected="selected">Regular</option>
+          <option value="extra">Extra (+ $0.25)</option>
+      </select>
+      <b>Lettuce: </b>
+      <select name="lettuce" class="form-control selcls col-sm-3">
+          <option value="none">None</option>
+          <option value="regular" selected="selected">Regular</option>
+          <option value="extra">Extra (+ $0.25)</option>
+      </select>
+      <b>Tomato: </b>
+      <select name="tomato" class="form-control selcls col-sm-3">
+          <option value="none">None</option>
+          <option value="regular" selected="selected">Regular</option>
+          <option value="extra">Extra (+ $0.25)</option>
+      </select>
+      <b>Sour Cream: </b>
+      <select name="sour_cream" class="form-control selcls col-sm-3">
+          <option value="none">None</option>
+          <option value="regular" selected="selected">Regular</option>
+          <option value="extra">Extra (+ $0.25)</option>
+      </select>      
+      <input name="price" type="hidden" value="3.00">
+    <button type="submit" class="btn btn-primary col-md-3 mt-3">Add Taco</button>
+    </div>       
+  </form><br> 
+</div>
+
+<div class="sides">
+    <b>Sides:</b>
+    <form action="/sides" method="POST">
+        <div class="container form-group col-sm-12 px-3 mt-3">
+        <select name="side" class="form-control selcls col-sm-3">
+            <option value="beans">Beans: $2.00</option>
+            <option value="chips">Chips: $1.25</option>
+            <option value="salsa">Salsa: $2.10</option>
+            <option value="guacamole">Guacamole: $1.50</option>
+            <option value="brown_rice">Brown Rice: $0.75</option>
+        </select>
+        <button type="submit" class="btn btn-primary col-md-3 mt-3">Add Side</button>
+        </div>
+    </form>
+</div>
+    
+<div class="drinks">
+    <b>Drinks:</b>
+    <form action="/drinks" method="POST">
+        <div class="container form-group col-sm-12 px-3 mt-3">        
+        <select name="drink" class="form-control selcls col-sm-3">
+            <option value="coke">Coke</option>
+            <option value="pepsi">Pepsi</option>
+            <option value="sprite">Sprite</option>
+            <option value="dr_pepper">Dr. Pepper</option>
+            <option value="fanta">Fanta</option>
+        </select>
+        <button type="submit" class="btn btn-primary col-md-3 mt-3">Add Drink</button>
+        </div>
+    </form>
+</div>
+    
+<div class="order">  
+  <b>Your order:</b><br>
+  <b>Tacos:</b>
+  <ol class="tacos">
+  <% for(var i=0; i<tacos.length; i++) {%>
+    <% var taco_price = 2.00 %>
+    <% if(tacos[i].cheese == "extra") { %>
+       <% taco_price += 0.25 %>  
+    <%  } %>
+    <% if(tacos[i].lettuce == "extra") { %>
+       <% taco_price += 0.25 %>  
+    <%  } %>
+    <% if(tacos[i].tomato == "extra") { %>
+       <% taco_price += 0.25 %>  
+    <%  } %>
+    <% if(tacos[i].sour_cream == "extra") { %>
+       <% taco_price += 0.25 %>  
+    <%  } %>
+    <% total_taco_price += taco_price; %>
+    <% total_price += taco_price; %>
+      
+    <% if(tacos[i].protein == "chicken") { %>
+       <% chicken_taco_count += 1 %>  
+    <%  } %>   
+    <% if(tacos[i].protein == "beef") { %>
+       <% beef_taco_count += 1 %>  
+    <%  } %>   
+    <% if(tacos[i].protein == "tofu") { %>
+       <% tofu_taco_count += 1 %>  
+    <%  } %>         
+    <li class="taco">
+      <b>   
+      <span><%= tacos[i].protein %> taco,</span>
+      <span><%= tacos[i].cheese %> cheese,</span>
+      <span><%= tacos[i].lettuce %> lettuce,</span>
+      <span><%= tacos[i].tomato %> tomato,</span>
+      <span><%= tacos[i].sour_cream %> sour cream</span>
+      <span><%= ": $" + parseFloat(Math.round(taco_price * 100) / 100).toFixed(2) %></span>
+      </b>       
+      <a href="/tacos/delete/<%= tacos[i]._id %>">x</a>
+    </li>
+  <% } %>
+  </ol>
+  <b>Sides:</b>
+  <ol class="sides">
+  <% var side_price = 1.00; %>
+  <% for(var i=0; i<sides.length; i++) {%>
+    <% if(sides[i].side == "beans") { %>
+       <% side_price = 2.00 %>  
+       <% beans_count += 1 %>        
+    <%  } %>
+    <% if(sides[i].side == "chips") { %>
+       <% side_price = 1.25 %>
+       <% chips_count += 1 %>      
+    <%  } %>
+    <% if(sides[i].side == "salsa") { %>
+       <% side_price = 2.10 %>
+       <% salsa_count += 1 %>      
+    <%  } %>
+    <% if(sides[i].side == "guacamole") { %>
+       <% side_price = 1.50 %>
+       <% guacamole_count += 1 %>       
+    <%  } %>
+    <% if(sides[i].side == "brown_rice") { %>
+       <% side_price = 0.75 %>
+       <% brownrice_count += 1 %>       
+    <%  } %>
+    <% total_side_price += side_price; %>      
+    <% total_price += side_price; %>      
+    <li class="side">
+        <span><b><%= sides[i].side + " $" + parseFloat(Math.round(side_price * 100) / 100).toFixed(2)  %></b></span>
+        <a href="/sides/delete/<%= sides[i]._id %>">x</a>
+    </li>
+  <% } %>
+  </ol>
+  <b>Drinks:</b>
+  <ol class="drinks">
+  <% for(var i=0; i<drinks.length; i++) {%>
+    <% var drink_price = 1.00 %>
+    <% total_drink_price += drink_price; %>
+    <% total_price += drink_price; %>
+      
+    <% if(drinks[i].drink == "coke") { %>
+       <% side_price = 0.75 %>
+       <% coke_count += 1 %>       
+    <%  } %>  
+    <% if(drinks[i].drink == "pepsi") { %>
+       <% side_price = 0.75 %>
+       <% pepsi_count += 1 %>       
+    <%  } %>  
+    <% if(drinks[i].drink == "sprite") { %>
+       <% side_price = 0.75 %>
+       <% sprite_count += 1 %>       
+    <%  } %>  
+    <% if(drinks[i].drink == "dr_pepper") { %>
+       <% side_price = 0.75 %>
+       <% drpepper_count += 1 %>       
+    <%  } %>  
+    <% if(drinks[i].drink == "fanta") { %>
+       <% side_price = 0.75 %>
+       <% fanta_count += 1 %>       
+    <%  } %>        
+    <li class="drink">
+        <span><b><%= drinks[i].drink + ": $" + parseFloat(Math.round(drink_price * 100) / 100).toFixed(2) %></b></span>
+        <a href="/drinks/delete/<%= drinks[i]._id %>">x</a>
+    </li>
+  <% } %>
+  </ol>
+  <b>Price:</b>
+  <% var tax = total_price * 0.07; %>
+  <% var drone_fee = 5.00; %>
+  <% var discount = (total_price * discount_rate); %>    
+  <% var total = total_price + tax + drone_fee - discount; %>
+  <ul>
+     <li>
+         <b>Tacos<%=": $" + parseFloat(Math.round(total_taco_price * 100) / 100).toFixed(2) %></b>
+         <b>Sides<%=": $" + parseFloat(Math.round(total_side_price * 100) / 100).toFixed(2) %></b>
+         <b>Drinks<%=": $" + parseFloat(Math.round(total_drink_price * 100) / 100).toFixed(2) %></b>
+         <b>Subtotal<%=": $" + parseFloat(Math.round(total_price * 100) / 100).toFixed(2) %></b>
+     </li>
+     <li>
+         <b>Discount<%=": $" + parseFloat(Math.round(discount * 100) / 100).toFixed(2) + " (%" + discount_rate*100 +")" %></b>
+     </li>  
+     <li>
+         <b>Tax<%=": $" + parseFloat(Math.round(tax * 100) / 100).toFixed(2) %></b>
+     </li>
+     <li>
+         <b>Drone Delivery Fee<%=": $" + parseFloat(Math.round(drone_fee * 100) / 100).toFixed(2) %></b>
+     </li>
+     <li>
+         <b>Total<%=": $" + parseFloat(Math.round(total * 100) / 100).toFixed(2) %></b>
+     </li>  
+  </ul><br>
+    
+  
+    
+   
+  <form action="/discount" method="POST">
+  <div class="container form-group col-sm-12 px-3 mt-3">                                    
+      <input name="discount" placeholder="Enter discount code" type="text"><br>
+      <button type="submit" class="btn btn-outline-primary col-md-3 mt-3">Apply discount code</button>
+  </div>     
+  </form>    
+
+  <form action="/placeorder" method="POST">
+        <% day = currentdate.getDate(); %>
+        <% month = currentdate.getMonth()+1; %>
+        <% year = currentdate.getFullYear(); %>
+        <% hour = currentdate.getHours(); %>
+        <% minute= currentdate.getMinutes(); %> 
+        <% second = currentdate.getSeconds(); %>
+      <div class="form-group col-sm-12 px-3 mt-3">
+      <input name="customer_id" type="hidden" value="<%= user._id %>">
+      <input name="sales" type="hidden" value="<%= total_price %>">
+      <input name="chicken_taco_count" type="hidden" value="<%= chicken_taco_count %>">
+      <input name="beef_taco_count" type="hidden" value="<%= beef_taco_count %>">
+      <input name="tofu_taco_count" type="hidden" value="<%= tofu_taco_count %>">
+      <input name="beans_count" type="hidden" value="<%= beans_count %>">
+      <input name="chips_count" type="hidden" value="<%= chips_count %>">
+      <input name="salsa_count" type="hidden" value="<%= salsa_count %>">
+      <input name="guacamole_count" type="hidden" value="<%= guacamole_count %>">
+      <input name="brownrice_count" type="hidden" value="<%= brownrice_count %>">
+      <input name="coke_count" type="hidden" value="<%= coke_count %>">
+      <input name="pepsi_count" type="hidden" value="<%= pepsi_count %>">
+      <input name="sprite_count" type="hidden" value="<%= sprite_count %>">
+      <input name="drpepper_count" type="hidden" value="<%= drpepper_count %>">
+      <input name="fanta_count" type="hidden" value="<%= fanta_count %>">
+      <input name="day" type="hidden" value="<%= day %>">
+      <input name="month" type="hidden" value="<%= month %>">
+      <input name="year" type="hidden" value="<%= year %>">
+      <input name="hour" type="hidden" value="<%= hour %>">
+      <input name="minute" type="hidden" value="<%= minute %>">
+      <input name="second" type="hidden" value="<%= second %>">     
+      <button type="submit" class="btn btn-outline-primary col-md-3 mt-3">Place Order</button> 
+      </div>       
+  </form>
+    <% } else { %>
+        <h1>Login at the homepage to place an order</h1>
+        <a href="/">Go back</a>
+    <% } %>
+</div>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>    
+</body>
+    
+</html>
